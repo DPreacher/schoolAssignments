@@ -4,7 +4,8 @@
 using namespace std;
 
 /*
-Daniel Ingram
+	Programmer:		Daniel Ingram
+	Description:	A Program to used to calculate the volume of either a box, cylinder, or cone.
 */
 
 void showMenu();
@@ -30,6 +31,8 @@ int main()
 		choice = validateChoice(choice);
 		if (cin.eof())
 			break;
+
+		//Ask for required input
 		switch (choice)
 		{
 		case 'b':
@@ -37,12 +40,12 @@ int main()
 			break;
 		default:
 			cout << "Please input the Radius: ";
-
 		}
 		lengthOrRadius = getValidNumber();
 		cout << "Please input the height: ";
 		height = getValidNumber();
 
+		//calculate and display the volume of choice
 		volume = computeVolume(choice, lengthOrRadius, height);
 		showVolume(choice, lengthOrRadius, height, volume);
 
