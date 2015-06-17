@@ -81,3 +81,38 @@ FROM customers c
 	INNER JOIN orders o
 	ON o.customer_id = c.customer_id
 ORDER BY customer_last_name, order_date DESC;
+
+-- 4c First Inital of first name followed by a period and and an alias --
+SELECT  CONCAT(LEFT(customer_first_name,1),". ", customer_last_name) AS customer_name , order_date
+FROM customers c
+	INNER JOIN orders o
+	ON o.customer_id = c.customer_id
+ORDER BY customer_last_name, order_date DESC;
+
+-- 4d include 'title' field from unconnected table--
+SELECT  CONCAT(LEFT(customer_first_name,1),". ", customer_last_name) AS customer_name , order_date, title
+FROM customers c
+	INNER JOIN orders o
+		ON o.customer_id = c.customer_id
+	INNER JOIN order_details d
+		ON o.order_id = d.order_id
+	INNER JOIN items i
+		ON d.item_id = i.item_id
+ORDER BY customer_last_name, order_date DESC;
+
+-- OUTER JOINS --
+-- 5a --
+USE ap;  
+
+SELECT invoice_number, vendor_name
+FROM vendors
+	LEFT JOIN invoices
+		ON vendors.vendor_id = invoices.vendor_id
+ORDER BY invoice_number;
+		-- ALL VENDORS NOT USED AND ALL INVOICES WITH VENDORS
+SELECT invoice_number, vendor_name
+FROM vendors
+	RIGHT JOIN invoices
+		ON vendors.vendor_id = invoices.vendor_id
+ORDER BY invoice_number;
+		-- GIVES ALL RECORDS RELATING TO TABLE 2 - invoices- AND DISPLAYS.  same as inner in this case
