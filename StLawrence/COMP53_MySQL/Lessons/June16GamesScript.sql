@@ -46,6 +46,7 @@ CREATE TABLE gameDevLink
 			FOREIGN KEY (gameID)
             REFERENCES game(gameID)
 );
+
 INSERT INTO gameDevLink VALUES
 	(01,101),
     (01,102),
@@ -62,3 +63,34 @@ ORDER BY gameID;
 SELECT *
 FROM developer
 ORDER BY developerID;
+
+CREATE TABLE developerInfo
+(
+	developerID 			SMALLINT		PRIMARY	KEY,
+    developerInfoComments	VARCHAR(150),
+	constraint devInfoLink
+		FOREIGN KEY (developerID)
+		REFERENCES developer (developerID)
+);
+INSERT INTO developerInfo VALUES
+(01,'Brian is working on Stufz'),
+(02, 'David is flying planes'),
+(03,'Paulo has gone to spain');
+
+SELECT game_name, developerFName, developerLName
+FROM game g
+	INNER JOIN gameDevLink l
+		ON l.gameID = g.gameId
+	INNER JOIN developer d
+		ON l.developerID = d.developerID
+WHERE game_released <2000 AND game_released >= 1900
+ORDER BY game_name;
+
+SELECT developerFName, developerLName, developerInfoComments AS Comments, game_name AS "Game Name"
+FROM game g
+	INNER JOIN gameDevLink l
+		ON l.gameID = g.gameId
+	INNER JOIN developer d
+		ON l.developerID = d.developerID
+	Right JOIN developerInfo i
+		ON d.developerID = i.developerID;
