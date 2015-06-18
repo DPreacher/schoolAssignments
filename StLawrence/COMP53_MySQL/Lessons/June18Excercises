@@ -126,5 +126,40 @@ FROM vendors v
 	JOIN invoices i
 	ON v.vendor_id = i.vendor_id
 GROUP BY vendor_name
+ORDER BY invoice_qty DESC;
+		-- 34 rows returned
+
+-- 7b --
+
+SELECT 	vendor_name,
+		COUNT(*) as invoice_qty,
+		ROUND(AVG(invoice_total),2) AS invoice_avg
+FROM vendors v 
+	JOIN invoices i
+	ON v.vendor_id = i.vendor_id
+GROUP BY vendor_name
 HAVING AVG(invoice_total)>500
 ORDER BY invoice_qty DESC;
+		-- 19 rows returned
+		-- 8 invoices		867.53  invoice Avg
+		-- HAVING executes after group by Clause
+-- 7c --
+SELECT 	vendor_name,
+		COUNT(*) as invoice_qty,
+		ROUND(AVG(invoice_total),2) AS invoice_avg
+FROM vendors v 
+	JOIN invoices i
+	ON v.vendor_id = i.vendor_id
+WHERE invoice_total>500
+GROUP BY vendor_name
+ORDER BY invoice_qty DESC;
+		-- 20 rows returned
+		-- 7 invoices		946.67  invoice Avg
+		-- WHERE executes before Group By Clause
+
+/*
+	-- Having clause only refers to columns within SELECT statement
+	-- WHERE clause refers to base TABLE
+	-- HAVING clause can have aggregate functions
+	-- WHERE clause can't have aggregate functions
+*/
