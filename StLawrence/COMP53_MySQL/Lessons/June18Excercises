@@ -17,7 +17,7 @@ sum(invoice_total-payment_total-credit_total)as total_due
 from invoices;
 	-- 1 row returned
 
--- 2 --
+-- 2 COUNT/ROUND/AVG/SUM--
 SELECT 'After Jan 1, 2014' AS Selection_date, 
 		COUNT(*) AS Number_of_invoices,
 		ROUND(AVG(invoice_total), 2) AS avg_invoice_amt,
@@ -35,7 +35,7 @@ WHERE invoice_date>'2014-01-01';
 		-- ROUND is not an aggregate function it displays information differently
 		-- ROUND format: ROUND(variable_Name, num_of_decimal_places)
 
--- 3 --
+-- 3 MIN/MAX--
 SELECT 'After Jan 1, 2014' AS 'Selection Date', 
 		COUNT(*) AS Number_of_invoices,
 		MAX(invoice_total) AS highest_invoice_amt,
@@ -44,10 +44,87 @@ FROM invoices
 WHERE invoice_date>'2014-01-01';
 		-- COUNT, MAX, MIN cannot be used within the WHERE clause only within the SELECT clause
 
--- 4 --
+-- 4 DISTINCT --
 SELECT COUNT(DISTINCT vendor_id)  AS number_of_vendors,
-		COUNT(vendor_id) AS Number_of_invoices,
+		COUNT(8) AS Number_of_invoices,
 		ROUND(AVG(invoice_total), 2) AS avg_invoice_amt,
 		SUM(invoice_total) AS total_invoice_amt
 FROM invoices
 WHERE invoice_date>'2014-01-01';
+		-- shows how many different values are there
+
+--  GROUP BY & HAVING Clauses --
+-- 5a --
+SELECT vendor_id,
+		avg(invoice_total)
+FROM invoices;
+
+-- 5b --
+SELECT vendor_id,
+		avg(invoice_total)
+FROM invoices
+GROUP BY vendor_id;
+		-- 34 rows
+-- 5c --
+SELECT vendor_id,
+		ROUND(AVG(invoice_total),2) AS avg_invoice_amt
+FROM invoices
+GROUP BY vendor_id
+HAVING AVG(invoice_total)>2000
+ORDER BY avg_invoice_amt DESC;
+		-- 8 rows
+		-- can't have a HAVING Clause without a GROUP BY Clause
+
+-- 5d Don't Do This--
+SELECT vendor_id,
+		ROUND(AVG(invoice_total),2) AS 'AVG Invoice Amt'
+FROM invoices
+GROUP BY vendor_id
+HAVING AVG(invoice_total)>2000
+ORDER BY 'AVG Invoice Amt';
+		-- When you use quotes with an alias it will not sort in an ORDER BY Clause
+-- 6a --
+SELECT 	vendor_id, 
+		COUNT(*) AS invoice_qty
+FROM vendors 
+GROUP BY vendor_id;
+
+-- 6b.i --
+SELECT 	vendor_state, 
+		vendor_city, 
+		COUNT(*) AS invoice_qty,
+		ROUND(AVG(invoice_total),2) AS invoice_avg
+FROM invoices i
+	JOIN vendors v
+	ON i.vendor_id = v.vendor_id;
+-- 6b.ii --
+SELECT 	vendor_state, 
+		vendor_city, 
+		COUNT(*) AS invoice_qty,
+		ROUND(AVG(invoice_total),2) AS invoice_avg
+FROM invoices i
+	JOIN vendors v
+	ON i.vendor_id = v.vendor_id
+GROUP BY vendor_state, vendor_city;
+		-- 20 rows returned
+-- 6c --
+SELECT 	vendor_state, 
+		vendor_city, 
+		COUNT(*) AS invoice_qty,
+		ROUND(AVG(invoice_total),2) AS invoice_avg
+FROM invoices i
+	JOIN vendors v
+	ON i.vendor_id = v.vendor_id
+GROUP BY vendor_state, vendor_city
+HAVING invoice_qty >=2;
+		-- 12 rows returned
+-- 7a --
+SELECT 	vendor_name,
+		COUNT(*) as invoice_qty,
+		ROUND(AVG(invoice_total),2) AS invoice_avg
+FROM vendors v 
+	JOIN invoices i
+	ON v.vendor_id = i.vendor_id
+GROUP BY vendor_name
+HAVING AVG(invoice_total)>500
+ORDER BY invoice_qty DESC;
