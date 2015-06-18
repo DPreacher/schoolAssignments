@@ -1,0 +1,53 @@
+-- sUMMARY qUERIES
+-- 1a --
+USE ap;
+
+SELECT INVOICE_DATE, 'Hi - looking dor dates after May 1, 2014' as selection_date
+FROM invoices
+WHERE invoice_date>'2014-05-01';  
+	-- 100 rows returned
+
+-- 1b --
+select count(*) from invoices; 
+	-- 1 row returned
+
+-- 1c --
+select count(*) as number_of_invoices,
+sum(invoice_total-payment_total-credit_total)as total_due
+from invoices;
+	-- 1 row returned
+
+-- 2 --
+SELECT 'After Jan 1, 2014' AS Selection_date, 
+		COUNT(*) AS Number_of_invoices,
+		ROUND(AVG(invoice_total), 2) AS avg_invoice_amt,
+		SUM(invoice_total) AS total_invoice_amt
+FROM invoices
+WHERE invoice_date>'2014-01-01';
+
+ -- Change headings of output using quotes --
+SELECT 'After Jan 1, 2014' AS 'Selection Date', 
+		COUNT(*) AS Number_of_invoices,
+		ROUND(AVG(invoice_total), 2) AS avg_invoice_amt,
+		SUM(invoice_total) AS total_invoice_amt
+FROM invoices
+WHERE invoice_date>'2014-01-01';
+		-- ROUND is not an aggregate function it displays information differently
+		-- ROUND format: ROUND(variable_Name, num_of_decimal_places)
+
+-- 3 --
+SELECT 'After Jan 1, 2014' AS 'Selection Date', 
+		COUNT(*) AS Number_of_invoices,
+		MAX(invoice_total) AS highest_invoice_amt,
+		MIN(invoice_total) AS lowest_invoice_amt
+FROM invoices
+WHERE invoice_date>'2014-01-01';
+		-- COUNT, MAX, MIN cannot be used within the WHERE clause only within the SELECT clause
+
+-- 4 --
+SELECT COUNT(DISTINCT vendor_id)  AS number_of_vendors,
+		COUNT(vendor_id) AS Number_of_invoices,
+		ROUND(AVG(invoice_total), 2) AS avg_invoice_amt,
+		SUM(invoice_total) AS total_invoice_amt
+FROM invoices
+WHERE invoice_date>'2014-01-01';
