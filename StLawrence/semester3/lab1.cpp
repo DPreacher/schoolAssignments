@@ -1,4 +1,4 @@
-Enter file contents here#include <iostream>
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <iomanip>
@@ -47,9 +47,9 @@ int loadArray(ItemRec product[])
 
 	for (; length< SIZE; length++)
 	{
+		fin >> product[length].itemCode;
 		if (fin.eof())
 			break;
-		fin >> product[length].itemCode;
 		fin.ignore();
 		getline(fin, product[length].description);
 		fin >> product[length].quantity;
