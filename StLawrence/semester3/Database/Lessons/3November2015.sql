@@ -23,15 +23,18 @@ CREATE TABLE customerEvent
     customerID BIGINT,
     eventID BIGINT,
     ticketCount INT DEFAULT 0
+    FOREIGN KEY (eventID)
+        REFERENCES event(eventID)
+    FOREIGN KEY (customerID)
+            REFERENCES customer(customerID)
 );
-    /*  no primary key set yet
-    Point:
-        ask for ticket count at the time of purchase
-*/
+ 
 CREATE TABLE ticket
 (
     ticketID SERIAL PRIMARY KEY,
-    eventID     BIGINT
+    eventID     BIGINT,
+    FOREIGN KEY (eventID)
+        REFERENCES event(eventID)
 );
 
 /* Excercise
@@ -69,6 +72,7 @@ DELIMITER ; /* Set the delimiter back to the semi-colon*/
 call sellTicket(1,1,4);
 call sellTicket(1,2,4);
 call sellTicket(2,2,7);
+call sellTicket(1,3,4); /* allows  it as long of the forign keys aren't created*/
 
 /* check the customer Event log */
 SELECT * FROM customerEvent;
