@@ -34,6 +34,4 @@ public:
 	virtual ~WeekDate();
 private:
 	string *dayOfWeek;
-	
 };
-
