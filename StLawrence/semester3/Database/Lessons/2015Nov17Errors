@@ -1,0 +1,136 @@
+/* Procedures
+    -   built in logic
+    -   test 
+Now:
+    -   try putting data into a field and catch any erros
+
+Tasks:
+    -   add appointment fails
+   -    if duplicate appointment id used
+   OR
+   -    if foreign key fails
+ 
+TODAY
+=====
+    CONDITION HANDLERS(aka Exception Handlers)
+    Eroor codes:
+        two type:
+            -   numbers that mysql associates with a specific error
+            -   SQLSTATE
+        codes:
+        -   1329(mysql)/02000(SQLSTATE):
+                fetch from non-existant row
+        -   1062(mySql)/2300(SQL)
+                attempt to store duplicate key value
+        -   others in the textbook
+        
+    When writing the procedures */
+    BEGIN
+        -- DATA DECLARATIONS
+        -- Handler declarations after Data declarations (may need to refer to data)
+        
+        DECLARE CONTINUE HANDLER FOR 1062        -- Declare continue handler
+        -- CAN DECLARE ONE LINE HANDLER OR MULTILINE WITH BEGIN AND END
+        -- usually need single line to assign a value
+        SELECT "CANNOT ADD RECORD"; -- Like a cout statement
+        INSERT INTO  -- ....... WHATEVER STUFF
+        SELECT INTO "Procedure finished";
+    END//
+    
+    BEGIN
+        -- DATA DECLARATIONS
+        -- Handler declarations after Data declarations (may need to refer to data)
+        
+        DECLARE EXIT HANDLER FOR 1062        -- Declare continue handler
+        -- CAN DECLARE ONE LINE HANDLER OR MULTILINE WITH BEGIN AND END
+        -- usually need single line to assign a value
+        SELECT "CANNOT ADD RECORD"; -- Like a cout statement
+        INSERT INTO  -- ....... WHATEVER STUFF
+        SELECT INTO "Procedure finished";
+    END//    
+    
+    
+    CREATE PROCEDURE AddVet
+    (
+        in  vetId int,
+        in  firstName VARCHAR (45),
+        in lastName VARCHAR(45)
+    )
+     BEGIN
+       
+        
+        DECLARE CONTINUE HANDLER FOR 1062       
+        Begin
+            SELECT "CANNOT ADD Vet"; 
+        END
+        
+        INSERT INTO VET VALUES (vetId, firstName, lastName);
+        SELECT "PROCEDURE FINISHED"
+    END//
+    
+    -- Can we jump out of more than one 
+    
+    /*
+       Another Version
+        --  can set multiple boolean values to catch all errors
+    */
+    
+    BEGIN
+        DECLARE duplicate_record TINYINT DEFAULT FALSE-- Tinyint amounts to a boolean
+        DECLARE CONTINUE HANDLER FOR 1062 -- instead of issuing a message here set duplicate_record to true:
+        SET duplicate_record = TRUE;
+        -- use if statement to chek duplicate_record &, if true, print message
+    /* 
+            MY WORK:
+    */
+    
+    DROP PROCEDURE IF EXISTS AddVet;
+DELIMITER //
+  CREATE PROCEDURE AddVet
+    (
+        in  vetId int,
+        in  firstName VARCHAR (45),
+        in lastName VARCHAR(45)
+    )
+BEGIN
+        DECLARE duplicate_record TINYINT DEFAULT FALSE;   
+        DECLARE CONTINUE HANDLER FOR 1062       
+        SET duplicate_record = TRUE;
+        IF duplicate_record = TRUE THEN
+            SELECT "ERROR 1062: Duplicate Primary Key";
+        END IF;
+        
+INSERT INTO VET VALUES (vetId, firstName, lastName);
+        SELECT "PROCEDURE FINISHED";
+    END//
+DELIMITER ;
+
+call AddVet(30,"Barry", "Moody");
+
+-- write a procedure to write a new pet into the procedure and set up a new pet
+    -- set up initial appointment
+    -- time/day w/ given vet
+-- parameters:
+    -- pet id
+    --  vet id
+    --  datetime
+    /* 
+        1329 ROW DOESN'T EXIST
+        1048 INSERT NULL WHEN NOT ALLOWED
+        1216 FOREIGN KEY CONSTRAINT ERROR WHEN ADDING/UPDATING CHILD
+        1217 ATTEMPS TO DELETE/UPADTE PARENT ROW PARENT ROW DUE TO FOREIGN KEY CONSTRAINT
+        1062 DUPLICATE VALUES IN UNIQUE FIELD
+    */
+DELIMITER //
+CREATE PROCEDURE AddPet (
+    IN petName VARCHAR(45),
+    IN petId INT,
+    IN initialAppt DATETIME
+)
+BEGIN
+    DECLARE duplicate_record TINYINT DEFAULT FALSE;
+    BEGIN 
+        DECLARE CONTINUE handler FOR 1062 
+    
+    -- errors in mySql PAGE 37 CHAPTER 13 
+    
