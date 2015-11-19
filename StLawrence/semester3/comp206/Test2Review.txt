@@ -1,0 +1,15 @@
+php
+    -   query
+
+mysqli
+    -   connect
+    -   query 
+    -   fetch_assoc
+
+Extract $_GET
+
+understand URL w/ GET
+
+$variable.name
+echo
+header - navigation
