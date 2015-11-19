@@ -13,3 +13,8 @@ understand URL w/ GET
 $variable.name
 echo
 header - navigation
+
+use of forms
+use of JSON
+    validation
+    
