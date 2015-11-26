@@ -27,13 +27,13 @@ void AnimalList::listAniamls(){
 	int countStations=0,totalAnimals=0,avg;
 	
 	SpaceStation *walker;
-	SpaceStation *highest;
+	SpaceStation *highest; //pointers uses less bytes than using string and int seperately, good job
 	assert(walker!=Null);
 	assert(highest!=0);
 	
 	walker=firstPtr;
 	highest=walker;
-	cout <<"Animal" <<setw(30)<<"Qty;
+	cout <<"Animal" <<setw(30)<<"Qty"<<endl<<endl;
 	while(walker!=NULL){
 		cout << walker->animal << setw(30) << walker->qty; 
 		totalAnimals+=walker->qty;
