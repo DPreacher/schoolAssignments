@@ -2,7 +2,7 @@
 	Write a function that will count the SpaceStation with only one animal in the 
 	AnimalList
 */
-int countAnimal(){
+int AnimalList::countAnimal(){
 	int countSingles = 0;
 	
 	SpaceStation *walker;
@@ -23,7 +23,7 @@ int countAnimal(){
 	animal with the highest number of animals. You can assume that animals are
 	unique per SpaceStation.
 */
-void listAniamls(){
+void AnimalList::listAniamls(){
 	int countStations=0,totalAnimals=0,avg;
 	
 	SpaceStation *walker;
