@@ -17,7 +17,6 @@ BEGIN
     SET homeID = SELECT teamId FROM team WHERE TeanName = homeTeamName;
     SET awayID = SELECT teamId FROM team WHERE TeanName = awayTeamName;
     
-    
     SET awayDateConflict = SELECT GameDate FROM game WHERE GameDate = dateOfGame AND HomeTeamId = awayID OR AwayTeamId= awayID;
     SET homeDateConflict = SELECT GameDate FROM game WHERE GameDate = dateOfGame AND HomeTeamId = homeID OR AwayTeamId= homeID;
     
@@ -48,11 +47,29 @@ END//
 CREATE FUNCTION SellTicket
 (
     IN howMany INT,
-    IN TicketType Enum("General", "Fan", "Group"),
+    IN ticketType VARCHAR(7),
     IN gameID INT
 )
 BEGIN
+    DECLARE ticketMaxError TINYINT DEFAULT FALSE;
+    DECLARE ticketMax INT default 0;
+
+    -- VALIDATE ticketType
+    IF ticketType = "General"
+        SET ticketMax = 10;
+    ELSEIF  ticketType = "Fan"
+        SET ticketMax=4;
+    ELSEIF ticketType = "Group";
+        SET ticketMax = 2;
+    ELSE 
+        SET ticketMaxError;
+    END IF
     
+    -- VALIDATE howMany
+        -- 2 genereal @ reg Price
+        -- 3 to 10 group @ 10%
+        -- 4 fan @ 25%
+    --
 END//
 DELIMITER ;
 
