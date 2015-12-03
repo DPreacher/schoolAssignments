@@ -11,11 +11,17 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="employees.css">
     </head>
     <body>
-        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
-        <script type="text/javascript" src="employeeTable.js"></script>
-            
+        <div id="dept">
         <?php
-        // code here
+        include_once 'deptTable.php';
         ?>
+        </div>
+        <div id="empl">
+        empl Table Here
+        </div>
+        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
+        <script src="employeeTable.js"></script>
+        
+    
     </body>
 </html>
