@@ -1,8 +1,8 @@
 <?php
 
-
 $connection=  mysqli_connect("localhost", "root", "mysql", "employees");
-$departments =mysqli_query($connection,"SELECT * FROM departments;");
+$sql="SELECT * FROM departments;";
+$departments =mysqli_query($connection,$sql);
 
 echo "<table id='deptTable'>";
 echo "<tr><th>Departments</th></tr>";
