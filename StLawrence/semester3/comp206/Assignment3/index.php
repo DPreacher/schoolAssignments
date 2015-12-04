@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -13,15 +8,31 @@ and open the template in the editor.
     <body>
         <div id="dept">
         <?php
-        include_once 'deptTable.php';
+            session_start();
+            $_SESSION["id"]="";
+            $_SESSION["max"]=$_SESSION["index"]=0;
+            include_once 'deptTable.php';
         ?>
         </div>
         <div id="empl">
-        empl Table Here
+            <table id="emplTable">
+                <tr><th id="emplDept" colspan="2">Department Employees</th></tr>
+                <tr id="dataRow">
+                    
+                        
+                    <td id="emplData" colspan="2"></td>
+                        
+                    
+                </tr>
+                <tr>
+                    <td><button type='button' id='prev'>Previous</button></td>
+                    <td><button type='button' id='next'>Next</button></td>
+                </tr>
+            </table>
         </div>
         <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
         <script src="employeeTable.js"></script>
         
-    
+        
     </body>
 </html>
