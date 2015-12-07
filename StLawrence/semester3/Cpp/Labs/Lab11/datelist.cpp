@@ -29,7 +29,11 @@ void DateList::addDate(){
 	string newName;
 	cout << "Enter Name: ";
 	getline(cin, newName);
-	
+	while (newName==""){
+		cout << "No name entered.  Please re-enter: ";
+		getline(cin, newName);
+		cin.ignore(80, '\n');
+	}
 	Date *walker = firstPtr, *stalker=NULL;
 
 	while (walker != NULL){
@@ -47,12 +51,21 @@ void DateList::addDate(){
 
 		cout << "Enter Age: ";
 		cin >> age;
-		cout << "Enter gender (m/f): ";
+		while (age < 18){
+			cout << "Must be 18 or older. Please re-enter age: ";
+			cin >> age;
+		}
+		builder->age=age;
+		cout << "Enter gender (M/F): ";
 		cin >> gender;
-		builder->age = age >= 18 ? age : 18;
-		gender=toupper(gender);
-		builder->gender = gender == 'M' || gender == 'F' ? gender : 'F';
-		builder->name = newName.length() > 0 ? newName : "invalid Name";
+		gender = toupper(gender);
+		while (!(gender == 'M' || gender == 'F')){
+			cout << "Invlaid gender.  Enter 'M' for Male or 'F' for Female. \n Please Re-Enter: ";
+			cin >> gender;
+			gender = toupper(gender);
+		}
+		builder->gender = gender;
+		builder->name = newName;
 		builder->link = walker;
 		if (firstPtr != NULL)
 			stalker->link = builder;
