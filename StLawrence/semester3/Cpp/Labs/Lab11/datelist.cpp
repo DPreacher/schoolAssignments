@@ -18,7 +18,7 @@ void DateList::showDate(ostream  & out)const{
 
 	Date *walker = firstPtr;
 	while (walker != NULL){
-		out << setw(25) << walker->name << setw(8) << walker->gender << setw(8) << walker->age;
+		out << setw(25) << walker->name << setw(8) << walker->gender << setw(8) << walker->age<<endl;
 		walker = walker->link;
 
 	}
@@ -39,7 +39,7 @@ void DateList::addDate(){
 		stalker = walker; 
 		walker = walker->link;
 	}
-	if (walker== NULL){
+	if (walker== NULL||walker->name!=newName){
 		char gender;
 		int age;
 		Date *builder = new Date;
@@ -50,8 +50,10 @@ void DateList::addDate(){
 		cout << "Enter gender (m/f): ";
 		cin >> gender;
 		builder->age = age >= 18 ? age : 18;
-		builder->gender = toupper(gender == 'm' || gender == 'M' || gender == 'f' || gender == 'F' ? gender : 'f');
+		gender=toupper(gender);
+		builder->gender = gender == 'M' || gender == 'F' ? gender : 'F';
 		builder->name = newName.length() > 0 ? newName : "invalid Name";
+		builder->link = walker;
 		if (firstPtr != NULL)
 			stalker->link = builder;
 		else
@@ -59,5 +61,5 @@ void DateList::addDate(){
 		numberOfDates++;
 	}	
 	cin.ignore(80, '\n');
-	cin.clear();
+	//cin.clear();
 }
