@@ -55,7 +55,7 @@ function FinishForm($portrait){
     echo "</form>";
     echo "</div>";
     echo "<div class=\"rightpiece\">";
-    DisplayImage($portrait,"Student Portrait","230em","130em");
+    DisplayImage($portrait,"Student Portrait");
     echo "</div>";
     echo "</div>";
     echo "<div class=\"bottom\"";
