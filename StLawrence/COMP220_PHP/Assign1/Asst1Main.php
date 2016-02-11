@@ -99,7 +99,7 @@ function DataEntryForm(){
     DisplayLabel("Manufacturing Costs: ");
     DisplayTextbox("manufacturingFee","");
     echo "</p>";
-    FinishForm("");
+    FinishForm("portrait.jpg");
 }
 function ResultsForm(){
    
@@ -151,12 +151,12 @@ function ResultsForm(){
     }
     echo " Next gig is ".$_POST["date"]."</span>\n";
     echo "</div>";
-    FinishForm("portrait.jpg");
+    FinishForm("portrait.jpg");;
 }
 function CreateTableForm(){
     SetUpForm("","Copy Shop: Create","H");
     echo "Table has been created ";
-    FinishForm("portrait.jpg");
+   FinishForm("portrait.jpg");
 }
 function DisplayData(){
     SetUpForm("","Copy Shop: Display Data","H");
