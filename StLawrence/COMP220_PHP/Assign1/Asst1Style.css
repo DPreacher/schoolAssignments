@@ -1,23 +1,23 @@
 body{
 	font-size: 1em;
 	font-family: Arial, Helvetica, sans-serif;
-	color:#;
+	color:#2C3E50;
+    background-color:#ECF0F1;
 }
-.bigpiece{
+.bigpiece{ 
 	color: #102B42;
 	padding: 2em;
-	width: 73em;
-	background-color: #EB7F00;
+	width: 69em;
+	background-color:#E74C3C;
 	float: left;
-	height:24em;
-	margin: 2em 3em 1.5em 3em;
+	height: 20em;
+	margin: 1em 3em 1.5em 3em;
 }
 .leftpiece{
-	width: 4em;
+	width: 5em;
 	height: 20em;
 	float: left;
-	
-	background-color:#ACF0F2;
+    
 }
 .middlepiece{
 	float: left;
@@ -29,16 +29,42 @@ body{
 }
 .rightpiece{
 	float: left;
-	padding: 2.5em;
-	height: 27.5em;
-	background-color:#ACF0F2;
+	padding:2.5em 1em 2.5em 1em;
+	height: 15em;
+	
+    width: 8em;
 }
 .top{
-	height: 2em;
+	
 	text-align: center;
-	width: 73em;
-	font-size: 1.3;
+	width: 69em;
+	height: 2em;
+    margin-left: 3em;
+    margin-right: 3em;
+    
+    font-size:1.1em;
+    font-weight: bold;
 }
 .bottom{
 	clear:left;
 }
+button{
+    width:95%;
+}
+p, label{
+    margin-left:1em;
+}
+.whiteSpace{
+  /* Whitespace is preserved. */
+  white-space:pre; 
+}
+.titles{
+    font-weight:bold;
+}
+/*
+#594431  blue 
+#1c1f59  light blue
+#91cdf2  white
+#f2f2f2  light tan
+#F2e6ce  brown
+*/
