@@ -14,8 +14,10 @@ import java.util.ArrayList;
  * @author dingram20
  */
 public class DrawingModel implements Serializable{
-    ArrayList<LineStrokeModel> lines = new ArrayList<>();
-    
+    ArrayList<LineStrokeModel> lines;
+    public DrawingModel() {
+        lines = new ArrayList<>();
+    }
     public void addLine(LineStrokeModel newLine){
         this.lines.add(newLine);
     }
