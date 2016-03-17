@@ -28,8 +28,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import model.DrawingFileFilter;
 import model.DrawingModel;
@@ -44,15 +46,17 @@ public class Controller
         implements MouseListener, MouseMotionListener,
         ActionListener, ComponentListener, WindowListener, WindowFocusListener, WindowStateListener {
 
+    private final String extension = ".draw";
     int resized = 0;
     View view;
     LineStrokeModel stroke;
     DrawingModel drawingModel;
-    boolean drawingCreated=false;
+    boolean drawingCreated = false;
 
     Color currentColour = Color.BLACK;
     int currentThickness = 1;
-
+    String lastDirectory;
+    
     /**
      * Controller
      *
@@ -62,7 +66,7 @@ public class Controller
      */
     public Controller(View view, DrawingModel drawingModel) {
         this.view = view;
-
+        lastDirectory = System.clearProperty("user.home/Document");
         this.drawingModel = drawingModel;
         view.setSize(600, 400);
 
@@ -86,11 +90,6 @@ public class Controller
         view.addButton(view.getWestPanel(), "MAGENTA", BorderLayout.WEST, view.getMedBtnSize(), this);
         view.addButton(view.getWestPanel(), "PINK", BorderLayout.WEST, view.getMedBtnSize(), this);
         view.addButton(view.getWestPanel(), "GRAY", BorderLayout.WEST, view.getMedBtnSize(), this);
-        
-        
-        
-        
-        
 
         //Create Thickness Buttons
         view.addButton(view.getEastPanel(), "THIN", BorderLayout.EAST, view.getSmallBtnSize(), this);
@@ -101,7 +100,6 @@ public class Controller
         view.addButton(view.getSouthPanel(), "NEW", BorderLayout.NORTH, view.getMedBtnSize(), this);
         view.addButton(view.getSouthPanel(), "SAVE", BorderLayout.NORTH, view.getMedBtnSize(), this);
         view.addButton(view.getSouthPanel(), "OPEN", BorderLayout.NORTH, view.getMedBtnSize(), this);
-        
 
         //Set Panel Colours
         //        add(view.getScrollPane());
@@ -121,8 +119,6 @@ public class Controller
         view.addWindowFocusListener(this);
         //view.getDrawingPanel().setBackground(Color.WHITE);
     }
-
-   
 
     private void redraw() {
         for (int i = 0; i < this.drawingModel.getNumberLines(); i++) {
@@ -198,17 +194,18 @@ public class Controller
         }
         return colour;
     }
-    private void newDrawing(){
+
+    private void newDrawing() {
         this.drawingModel = new DrawingModel();
         view.resetDrawingPanel(view.getGraphics());
     }
-    
-     public void saveDrawing() {
 
-        JFileChooser fc = new JFileChooser(System.clearProperty("user.home/Document"));
-        fc.setFileFilter(new DrawingFileFilter(".draw", "MyDrawing File"));
+    public void saveDrawing() {
+
+        JFileChooser fc = new JFileChooser(this.lastDirectory);
+        fc.setFileFilter(new DrawingFileFilter(this.extension, "MyDrawing File"));
         int result = fc.showSaveDialog(null);
-
+        fc.getCurrentDirectory();
         switch (result) {
             case JFileChooser.APPROVE_OPTION:
 
@@ -216,38 +213,46 @@ public class Controller
                     FileOutputStream outfs = null;
 
                     try {
+                        String filename = fc.getSelectedFile().getAbsoluteFile().toString();
+                        
+                        System.out.println(filename.lastIndexOf(this.extension));
+                        if (filename.lastIndexOf(filename) == -1) {
+                            outfs = new FileOutputStream(fc.getSelectedFile().getAbsoluteFile());
+                        } else {
+                            outfs = new FileOutputStream(fc.getSelectedFile().getAbsoluteFile() + ".draw");
+                        }
 
-                        outfs = new FileOutputStream(fc.getSelectedFile().getAbsoluteFile() + ".draw");
                         ObjectOutputStream outStream = new ObjectOutputStream(outfs);
                         outStream.writeObject(this.drawingModel);
+                        this.lastDirectory =fc.getCurrentDirectory().toString();
 
                     } catch (FileNotFoundException ex) {
-
+                        JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(),"Saving Error",JOptionPane.ERROR_MESSAGE);
                     } catch (IOException ex) {
-
+                        JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(),"Saving Error",JOptionPane.ERROR_MESSAGE);
                     } finally {
                         try {
                             outfs.close();
                         } catch (IOException ex) {
-
+                            JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(),"Saving Error",JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 } catch (Exception ex) {
-                    //TODO catch exception message
+                    JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(),"Saving Error",JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case JFileChooser.CANCEL_OPTION:
-                //TODO CANCEL SAVE FILE CODE 
                 break;
             case JFileChooser.ERROR_OPTION:
-                //TODO handle SAVE error
+                JOptionPane.showMessageDialog(new JFrame(), "Error Saving File","Saving Error",JOptionPane.ERROR_MESSAGE);
+                this.lastDirectory="user.home/Document";
                 break;
         }
     }
 
     public void open() {
 
-        JFileChooser fc = new JFileChooser(System.clearProperty("user.home/Document"));
+        JFileChooser fc = new JFileChooser(this.lastDirectory);
         fc.setFileFilter(new DrawingFileFilter(".draw", "MyDrawing File"));
         int result = fc.showOpenDialog(null);
         switch (result) {
@@ -255,28 +260,28 @@ public class Controller
                 try {
                     // ArrayList<LineStrokeModel> loadedDrawing=null;
                     FileInputStream infs = new FileInputStream(fc.getSelectedFile().getAbsoluteFile());
-
                     ObjectInputStream inputStream = new ObjectInputStream(infs);
-                    this.drawingModel = null;
-                    this.drawingModel = (DrawingModel) inputStream.readObject();
+                    
+                    // Clear Screen
                     newDrawing();
+                    //Save Loaded Model
+                    this.drawingModel = (DrawingModel) inputStream.readObject();
+                    //ReDraw on screen
                     redraw();
-
+                    this.lastDirectory=fc.getCurrentDirectory().toString();
                 } catch (Exception ex) {
-
+                    JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(),"Open Error",JOptionPane.ERROR_MESSAGE);
                 }
-
-                //TODO DESIRIALIZE
-                //this.drawingModel = (ArrayList<DrawingModel>)inputStream.readObject();
                 break;
             case JFileChooser.CANCEL_OPTION:
-                //TODO cancel OPEN FILE code 
                 break;
             case JFileChooser.ERROR_OPTION:
-                //TODO handle OPEN error
+                JOptionPane.showMessageDialog(new JFrame(), "Error Saving File","Open Error",JOptionPane.ERROR_MESSAGE);
+                this.lastDirectory="user.home/Document";
                 break;
         }
     }
+
     @Override
     public void componentResized(ComponentEvent e) {
         redraw();
