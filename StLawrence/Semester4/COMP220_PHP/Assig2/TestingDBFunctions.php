@@ -11,7 +11,7 @@ echo "
 	require_once("Asst2DatabaseFunctions.php");
 	error_reporting(0);
 	function test(){
-		$conn = mysqli_connect("localhost","root","mysql","test");
+		$conn = mysqli_connect("localhost","root","","test");
 		$tableName="testing";
 		$fieldnames=array(
 		0=>"Item", 
@@ -61,8 +61,10 @@ echo "
 		);
 		if(InsertIntoTable($tableName,$value,$dataTypes)){
 			echo "Data Inserted Successfully";
-		else
+		}
+		else{
 			echo "Error Inserting Data";
+		}
 		$value=array(
 		0=>"Milk", 
 		1=>"Kingston",
@@ -79,10 +81,12 @@ echo "
 		);
 		if(InsertIntoTable($tableName,$value,$dataTypes)){
 			echo "Data Inserted Successfully";
-		else
+		}
+		else{
 			echo "Error Inserting Data";
+		}
 		$result=RunSelect($tableName,"Item");
-		while($row=mysqli_fetch_assoc($result){
+		while($row=mysqli_fetch_assoc($result)){
 			print_r($row);
 		}
 	}
