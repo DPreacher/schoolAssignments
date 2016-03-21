@@ -34,11 +34,11 @@
 		
 		$sql = $sql . ")";
 		
-		$result = mysqli_query($conn, $sql)l
+		$result = mysqli_query($conn, $sql);
 		
 		return $result != false;
 	}
-	function InsertIntoTable($tablename,$values,$datatypes){\
+	function InsertIntoTable($tablename,$values,$datatypes){
 		$sqlRecord = "INSERT INTO $tablename VALUES (";
 		for($ctr=1;$ctr<count($values);$ctr++){
 			if ($datatypes[$ctr]=="varchar"||$datatypes[$ctr]=="date"){
