@@ -11,7 +11,7 @@ echo "
 	require_once("Asst2DatabaseFunctions.php");
 	error_reporting(0);
 	function test(){
-		$conn = mysqli_connect("localhost","root","","test");
+		$conn = mysqli_connect("localhost","root","mysql","test");
 		$tableName="testing";
 		$fieldnames=array(
 		0=>"Item", 
