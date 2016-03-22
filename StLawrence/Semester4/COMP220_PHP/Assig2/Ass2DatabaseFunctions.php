@@ -61,4 +61,25 @@
 		$result = mysqli_query($conn,$sqlRecord);
 		return $result !=false;
 	}
+	//Shell functions based on provided psuedo code:
+	function OpenConnectionandDatabase(){
+		$connAquired = true;
+		$databaseExists = true;
+		$conn = mysqli("localhost","root","password","test");
+		if(!$conn) 
+			$connAquired=false;
+		$result=mysqli_query($conn,"use test");
+		if($result)
+			$databaseExists=false;
+		return $connAquired && $databaseExists;
+	}
+	
+	GetOneRow(Resultset){
+		$row = mysqli_fetch_array(Resultset);
+		return $row;
+	}
+	
+	function CloseConnection(){
+		mysqli_close($conn);
+	}
 ?>
