@@ -1,7 +1,10 @@
- 
 <?php
+	/*
+		Programmers:	Daniel Ingram & Jeremy Robson
+		Program:   		Assignment 2 Sprint 2
+	*/
 	$conn=null;
-	function RunSelect($tablename, $wherefield="", $wherevalue="", $orderfield="", $sort="ASC") {
+	function RunSelect($tablename, $wherefield="", $wherevalue="", $orderfield, $sort="ASC") {
 		global $conn;
 		$sql = "SELECT * FROM $tablename";
 		
