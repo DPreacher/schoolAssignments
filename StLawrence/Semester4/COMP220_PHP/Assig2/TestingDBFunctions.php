@@ -1,4 +1,8 @@
 <?php
+	/*
+		Programmers:	Daniel Ingram & Jeremy Robson
+		Program:   		Assignment 2 Sprint 2
+	*/
 	echo "
 	<!doctype html>
 	<html lang = \"en\">
@@ -56,7 +60,7 @@
 			echo mysqli_error($conn);
 
 		$value=array(
-			0=>"tea", 
+			0=>"Tea", 
 			1=>"Toronto",
 			2=>"2015-05-31",
 			3=>15,
@@ -97,7 +101,7 @@
 		else
 			echo mysqli_error($conn);
 		
-		$result = RunSelect($tableName, "Item");
+		$result = RunSelect($tableName, "Item","","Item");
 
 		if ($result) {
 			echo "<ul>";
