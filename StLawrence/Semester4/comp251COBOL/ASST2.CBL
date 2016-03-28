@@ -8,10 +8,11 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-            SELECT F01-EMPLOYEE-FILE 
-                ASSIGN TO EMPLOYEE.
-            SELECT F02-REPORT-FILE
-                ASSIGN TO OUTFILE.
+            SELECT F01-EMPLOYEE-FILE ASSIGN TO 'empben.txt'
+                       ORGANIZATION IS LINE SEQUENTIAL.
+
+            SELECT F02-REPORT-FILE ASSIGN TO 'benReport.txt'
+                       ORGANIZATION IS LINE SEQUENTIAL.
        DATA DIVISION.
        FILE SECTION.
        FD F01-EMPLOYEE-FILE
@@ -38,7 +39,6 @@
                 10 W02-OFFICE-CODE PIC X(4).
        01 W03-IDX-TOTAL-BEN PIC 9 VALUE 0.
        01 W04-EOF-SWITCH PIC X VALUE SPACES.
-          88 W04-AT-EOF VALUE ='Y'.
        01 W05-DATA-TOTAL.
            05 W05-OFFICE OCCURS 11 TIMES
                 INDEXED BY W05-OFFICE-IDX.
@@ -59,7 +59,7 @@
              10 W07-DATE PIC XXXX/XX/XX.
           05 W07-HEADING-TWO.
              10 PIC X(26) VALUE "BENEFIT COST SUMMARY REPORT".
-             10 PIX X(54) VALUE SPACES.
+             10 PIC X(54) VALUE SPACES.
           05 W07-HEADING-THREE.
              10 PIC X(14) VALUE SPACES.
              10 PIC X(7) VALUE "BENEFIT".
@@ -78,14 +78,14 @@
              10 PIC X(5) VALUE SPACES.
              10 PIC X(7) VALUE "PENSION".
              10 PIC X(5) VALUE SPACES.
-             10 PIC X(5) VALUE TOTAL.
+             10 PIC X(5) VALUE "TOTAL".
              10 PIC X(13) VALUE SPACES.
        01 W08-FOOTERS 
           05 W08-FOOTER-ONE
              10 PIC X(14) VALUE "BENEFIT TOTAL ".
              10 W08-TOTAL-ROW OCCURS 5 TIMES
                 INDEXED BY W08-SUM-IDX.
-                15 W08-BEN-SUBTOTAL ZZZ,ZZ9.99.
+                15 W08-BEN-SUBTOTAL pic 999,999.99.
              10 PIC X(16) VALUE SPACES.
           05 W08-FOOTER-TWO
              10 PIC X(13) VALUE "COMPANY TOTAL".
@@ -128,27 +128,28 @@
            MOVE "BERL" TO W02-OFFICE-CODE (10)
            MOVE "****" TO W02-OFFICE-CODE (11)
       *INITIALIZE BENEFIT COST TABLE     
-           INITIALIZE W06-BENEFIT. 
+           INITIALIZE W06-BENEFITS. 
            INITIALIZE W01-EMPLOYEE-RECORD.
            .
        A200-READ-FILE.
             OPEN INPUT F01-EMPLOYEE-FILE
             PERFORM UNTIL W04-EOF-SWITCH = 'Y'
-                READ F01-EMPLOYEE-FILE
-                    AT END SET W01-AT-EOF
+                READ F01-EMPLOYEE-FILE INTO W01-EMPLOYEE-RECORD
+                    AT END move 'Y' to  W04-EOF-SWITCH
                     NOT AT END
                         MOVE F01-EMPLOYEE-RECORD TO W01-EMPLOYEE-RECORD
-                        PERFORM B210-ALLOCATE-COST
+                        PERFORM B210-FIND-OFFICE
                 END-READ
             END-PERFORM
             CLOSE F01-EMPLOYEE-FILE
             .
        B210-FIND-OFFICE.
-            INITIALIZE W03-OFFICE-INDEX
-            SEARCH W02-OFFICE-IDX 
+            INITIALIZE W03-IDX-TOTAL-BEN
+            SEARCH W02-OFIICE 
                 AT END 
                     PERFORM B220-ALLOCATE-COST
                 WHEN W02-OFFICE-CODE(W02-OFFICE-IDX) = W01-EMP-OFFICE-CODE
+                    set W06-OFFICE-IDX to W02-OFFICE-IDX
                     PERFORM B220-ALLOCATE-COST
             END-SEARCH
             .
@@ -158,17 +159,15 @@
               PERFORM VARYING W06-BEN-IDX FROM 1 BY 1
                 UNTIL W06-BEN-IDX = 5
                 IF W06-OFFICE-IDX = W01-BENEFIT-CODE(W01-IDX) 
-                  COMPUTE 
                     ADD W01-BENEFIT-COST(W01-IDX) 
-                        TO W06-BENEFIT-COSTS(W02-OFFICE-IDX,W06-BEN-IDX) 
-                        GIVING W06-BENEFIT-COSTS(W02-OFFICE-IDX,W06-BEN-IDX)
-                  END-COMPUTE
+                        TO W06-BENEFIT-COSTS(W06-OFFICE-IDX, W06-BEN-IDX) 
+                    
                 END-IF
               END-PERFORM
             END-PERFORM
            .
        A300-DISPLAY-DATA.
-            OPEN OUTPUT F02-REPORT-F
+            OPEN OUTPUT F02-REPORT-FILE
             PERFORM B310-DISPLAY-HEADINGS
             PERFORM B320-TOTAL-OFFICE-BENEFITS.
             PERFORM B330-CALC-SUM
@@ -186,24 +185,20 @@
             WRITE F02-REPORT-RECORD
            .
        B320-TOTAL-OFFICE-BENEFITS.
-            INITIALIZE W09-GRAND-TOTALS
+            INITIALIZE W09-GRAND-TOTAL
             PERFORM VARYING W06-OFFICE-IDX FROM 1 BY 1
                 UNTIL W06-OFFICE-IDX = 11
                 INITIALIZE W09-LINE-TOTALS
                 PERFORM VARYING W06-BEN-IDX FROM 1 BY 1
                   UNTIL W06-BEN-IDX = 5
-                 COMPUTE 
-                    ADD W06-BENEFIT-COSTS(W06-OFFICE-IDX,W06-BEN-IDX)
-                      TO W09-LINE-TOTALS
-                      GIVING W09-LINE-TOTALS
-                  END-COMPUTE
-                  MOVE W06-BENEFIT-COSTS(W06-OFFICE-IDX,W06-BEN-IDX) 
-                    TO W05-TOTAL-BENEFIT(W06-OFFICE-IDX,W06-BEN-IDX) 
-                  COMPUTE 
-                    ADD W09-LINE-TOTALS 
-                     TO W09-GRAND-TOTAL 
-                     GIVING W09-GRAND-TOTAL
-                  END-COMPUTE
+                  ADD W06-BENEFIT-COSTS(W06-OFFICE-IDX, W06-BEN-IDX)
+                    TO W09-LINE-TOTALS
+                   set W05-OFFICE-IDX to W06-OFFICE-IDX
+                   SET W05-IDX-BEN TO W06-BEN-IDX
+                  MOVE W06-BENEFIT-COSTS(W06-OFFICE-IDX, W06-BEN-IDX) 
+                    TO W05-TOTAL-BENEFIT(W05-OFFICE-IDX, W05-IDX-BEN) 
+                  ADD W09-LINE-TOTALS TO W09-GRAND-TOTAL
+               
                 END-PERFORM
             END-PERFORM
             MOVE W09-GRAND-TOTAL TO W08-GRAND-TOTAL
@@ -214,12 +209,11 @@
                INITIALIZE W09-BEN-COL-TOTAL
                PERFORM VARYING W06-OFFICE-IDX FROM 1 BY 1
                  UNTIL W06-OFFICE-IDX = 11
-                  COMPUTE
-                    ADD W06-BENEFIT-COSTS(W06-OFFICE-IDX,W06-BEN-IDX) 
-                       TO W09-BEN-COL-TOTAL GIVING W09-BEN-COL-TOTLAL
-                  END-COMPUTE
+                  ADD W06-BENEFIT-COSTS(W06-OFFICE-IDX, W06-BEN-IDX) 
+                     TO W09-BEN-COL-TOTAL 
                END-PERFORM
-               MOVE W06-BEN-COL-TOTAL TO W08-BEN-SUBTOTAL(W06-BEN-IDX)
+               SET W08-SUM-IDX TO W06-BEN-IDX
+               MOVE W09-BEN-COL-TOTAL TO W08-BEN-SUBTOTAL(W08-SUM-IDX)
             END-PERFORM
            .
        B340-DISPLAY-FOOTERS.
