@@ -9,5 +9,7 @@
     <style name="buttonDesign">
         <item name="android:scaleType">fitCenter</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
     </style>
 </resources>
