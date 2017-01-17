@@ -10,6 +10,7 @@
     tools:context="ca.on.sl.comp208.lab1a.MainActivity">
 
     <TextView
+        android:id="@+id/gameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
@@ -18,9 +19,9 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_marginTop="120dp"
+        android:layout_below="@+id/gameTitle"
+        android:layout_toEndOf="@+id/gameTitle"
+        android:layout_marginTop="80dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
@@ -28,9 +29,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton android:id="@+id/imageButton1"
-                android:src="@drawable/chara2_fina_anime"
+            <ImageButton 
                 style="@style/buttonDesign"
+                android:id="@+id/imageButton1"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="2" />
 
             <ImageButton
@@ -41,11 +43,13 @@
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton3"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="10" />
 
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton4"
+                android:src="@drawable/final_fantasy_cover"                         
                 android:layout_column="14" />
         </TableRow>
 
@@ -60,21 +64,25 @@
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton5"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="2" />
 
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton6"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="7" />
 
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton7"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="10" />
 
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton8"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="14" />
         </TableRow>
 
@@ -89,21 +97,25 @@
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton9"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="2" />
 
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton10"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="7" />
 
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton11"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="10" />
 
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton12"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="14" />
         </TableRow>
 
@@ -114,26 +126,26 @@
             <ImageButton
                 style="@style/buttonDesign"
                 android:id="@+id/imageButton13"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="2" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/buttonDesign"
                 android:id="@+id/imageButton14"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="7" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/buttonDesign"
                 android:id="@+id/imageButton15"
+                android:src="@drawable/final_fantasy_cover"
                 android:layout_column="10" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/buttonDesign"
                 android:id="@+id/imageButton16"
-                android:layout_column="14"
-                android:src="@android:drawable/ic_delete" />
+                android:src="@drawable/final_fantasy_cover"
+                android:layout_column="14" />
         </TableRow>
     </TableLayout>
 
