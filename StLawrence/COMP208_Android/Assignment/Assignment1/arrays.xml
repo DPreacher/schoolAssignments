@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="playCards">
+        <item>@drawable/chara2_fina_anime</item>
+        <item>@drawable/chara_nich_anime</item>
+        <item>@drawable/pc_cmn_dot_lasswell</item>
+        <item>@drawable/chara_jake_anime</item>
+        <item>@drawable/chara2_fina_anime</item>
+        <item>@drawable/chara_nich_anime</item>
+        <item>@drawable/pc_cmn_dot_lasswell</item>
+        <item>@drawable/chara_jake_anime</item>
+    </integer-array>
+    <string-array name="buttonIDs">
+
+    </string-array>
+</resources>
