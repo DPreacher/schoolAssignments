@@ -11,6 +11,13 @@
         <item>@drawable/chara_jake_anime</item>
     </integer-array>
     <string-array name="buttonIDs">
-
+        <item>R.id.imageButton1</item>
+        <item>R.id.imageButton2</item>
+        <item>R.id.imageButton3</item>
+        <item>R.id.imageButton4</item>
+        <item>R.id.imageButton5</item>
+        <item>R.id.imageButton6</item>
+        <item>R.id.imageButton7</item>
+        <item>R.id.imageButton8</item>
     </string-array>
 </resources>
