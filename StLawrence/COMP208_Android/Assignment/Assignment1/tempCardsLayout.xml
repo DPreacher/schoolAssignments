@@ -1,0 +1,142 @@
+<TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tableLayout">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton android:id="@+id/imageButton1"
+                android:src="@drawable/dancer"
+                style="@style/buttonDesign"
+                android:layout_column="2" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+
+                android:src="@drawable/dragoon"
+                android:id="@+id/imageButton2"
+                android:layout_column="7" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+                android:src="@drawable/dancer"
+                android:id="@+id/imageButton3"
+                android:layout_column="10" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+
+                android:src="@drawable/white_mage"
+                android:id="@+id/imageButton4"
+                android:layout_column="14" />
+        </TableRow>
+
+        <TableRow
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+
+                android:src="@drawable/dragoon"
+                style="@style/buttonDesign"
+                android:id="@+id/imageButton5"
+                android:layout_column="2" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+                android:id="@+id/imageButton6"
+
+                android:src="@drawable/black_mage"
+                android:layout_column="7" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+
+                android:src="@drawable/dark_knight"
+                android:id="@+id/imageButton7"
+                android:layout_column="10" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+
+                android:src="@drawable/ninja"
+                android:id="@+id/imageButton8"
+                android:layout_column="14" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+
+                android:src="@drawable/dark_knight"
+                style="@style/buttonDesign"
+                android:id="@+id/imageButton9"
+                android:layout_column="2" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+
+                android:src="@drawable/white_mage"
+                android:id="@+id/imageButton10"
+                android:layout_column="7" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+
+                android:src="@drawable/norm"
+                android:id="@+id/imageButton11"
+                android:layout_column="10" />
+
+            <ImageButton
+                android:src="@drawable/scholar"
+                style="@style/buttonDesign"
+                android:id="@+id/imageButton12"
+                android:layout_column="14" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                style="@style/buttonDesign"
+
+                android:src="@drawable/black_mage"
+                android:id="@+id/imageButton13"
+                android:layout_column="2" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+                android:src="@drawable/scholar"
+                android:id="@+id/imageButton14"
+                android:layout_column="7" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+                android:src="@drawable/norm"
+                android:id="@+id/imageButton15"
+                android:layout_column="10" />
+
+            <ImageButton
+                style="@style/buttonDesign"
+                android:src="@drawable/ninja"
+                android:id="@+id/imageButton16"
+                android:layout_column="14" />
+        </TableRow>
+    </TableLayout>
